@@ -1,4 +1,3 @@
-# Fakequery
+# Spyquery
 
-Emulates $ as a no-op, so you can safely keep jQuery code
-in functions, while still being able to render on the server.
+Emulates $ as sinon spies, so you can test code that uses jQuery.
