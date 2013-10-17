@@ -1,8 +1,10 @@
-// FakeQuery...
-// So you can render things on the server and not have to rewrite all
-// of your code to conditionally use jQuery.
+// SpyQuery...
+// Jquery methods as sinon spies, for testing.
+//
+// forked from www.github.com/tgriesser/fakequery
 // License: MIT
 var _ = require('underscore');
+var sinon = require('sinon')
 
 // These methods return values... we'll return undefined.
 var valueMethods  = ["val", "attr", "width", "height"];
@@ -56,6 +58,8 @@ var coreMethods = [
   "style", "sub", "swap", "text", "trim", "type", "uaMatch", "unique", "when"
 ];
 
+var allMethods = _.union(valueMethods, stringMethods, arrayMethods, chainMethods)
+
 var $ = function(selector, context) {
   return new $.fn.init(selector, context);
 };
@@ -64,24 +68,45 @@ $.fn = $.prototype = {
   length: 0
 };
 
-_.each(valueMethods, function(item) {
-  $.fn[item] = function() { return void 0; };
-});
+_.each(allMethods, function(item) {
+  $.fn[item] = function() {}
 
-_.each(stringMethods, function(item) {
-  $.fn[item] = function() { return ''; };
-});
+  switch (true) {
+    case !!~valueMethods.indexOf(item):
+      sinon.stub($.fn, item, function() { return void 0 });
+      break;
+    case !!~stringMethods.indexOf(item):
+      sinon.stub($.fn, item, function() { return '' });
+      break;
+    case !!~arrayMethods.indexOf(item):
+      sinon.stub($.fn, item, function() { return [] });
+      break;
+    case !!~chainMethods.indexOf(item):
+      sinon.stub($.fn, item, function() { return $(this) });
+      break;
+  }
+})
 
-_.each(arrayMethods, function(item) {
-  $.fn[item] = function() { return []; };
-});
+// _.each(valueMethods, function(item) {
+//   sinon.stub($.fn, item, function() { return void 0 })
+// });
 
-_.each(chainMethods, function(item) {
-  $.fn[item] = function() { return $(this); };
-});
+// _.each(stringMethods, function(item) {
+//   sinon.stub($.fn, item, function() { return '' })
+// });
 
-$.fn.init = function(selector, context) {
+// _.each(arrayMethods, function(item) {
+//   sinon.stub($.fn, item, function() {})
+//   $.fn[item] = sinon.stub().returns([]);
+// });
 
+// _.each(chainMethods, function(item) {
+//   $.fn[item] = ;
+// });
+
+$.fn.init = init
+
+function init(selector, context) {
   // Handle $($);
   if (selector instanceof $) return selector;
 
@@ -96,9 +121,15 @@ $.fn.init = function(selector, context) {
 
 $.fn.init.prototype = $.fn;
 
-$.extend = function() { return _.extend.apply(_, arguments); };
-$.each = function() { return _.each.apply(_, arguments); };
-$.map = function() { return _.map.apply(_, arguments); };
-$.makeArray = function() { return _.toArray.apply(_, arguments); };
+$.extend = function() {};
+$.each = function() {};
+$.map = function() {};
+$.makeArray = function() {};
+
+sinon.stub($, 'extend', function() { return _.extend.bind(_, arguments) });
+sinon.stub($, 'each', function() { return _.each.bind(_, arguments) });
+sinon.stub($, 'map', function() { return _.map.bind(_, arguments) });
+sinon.stub($, 'makeArray', function() { return _.toArray.bind(_, arguments) });
+
 
 module.exports = $;
