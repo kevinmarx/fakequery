@@ -15,7 +15,7 @@
   } else if (typeof define === 'function' && define.amd) { // require.js
     define(['underscore', 'sinon'], factory)
   } else { // browser globals
-    root.SpyQuery = factory(root._, root.sinon)
+    root.$ = factory(root._, root.sinon)
   }
 }(this, function (_, sinon) { 'use strict'
 
