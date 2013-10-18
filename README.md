@@ -9,7 +9,7 @@ Nodejs:
 ```shell
 npm install spyquery
 ```
-Browser Global: $
+Browser Global $:
 ```html
 <script src="spyquery.js"></script>
 ```
