@@ -20,5 +20,17 @@
   "dependencies": {
     "underscore": "~1.4.4",
     "sinon": "~1.7.3"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "blanket": "~1.1.5"
+  },
+  "scripts": {
+    "test": "mocha --recursive -R spec",
+    "coverage": "mocha --recursive --require blanket -R html-cov > coverage.html && open ./coverage.html",
+    "blanket": {
+      "pattern": "src",
+      "data-cover-never": "node_modules"
+    }
   }
 }
