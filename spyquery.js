@@ -1,4 +1,4 @@
-// SpyQuery 0.0.1
+// SpyQuery 0.0.2
 //
 // (c) Kevin Marx
 // forked from www.github.com/tgriesser/fakequery
