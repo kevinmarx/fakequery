@@ -1,4 +1,4 @@
-# Spyquery
+# SpyQuery
 ![Build Status](http://travis-ci.org/kevinmarx/spyquery.png?branch=master)
 
 Emulates jQuery as sinon spies, so you can test code that uses jQuery on the server or in the browser.
@@ -9,7 +9,7 @@ Nodejs:
 ```shell
 npm install spyquery
 ```
-Browser Global:
+Browser Global $:
 ```html
 <script src="spyquery.js"></script>
 ```
@@ -24,7 +24,7 @@ var $ = new SpyQuery()
 
 ### Checking Spies
 ```javascript
-> $('.foo').html
+> $('.foo').html()
 > {}
 > $.fn.html.callCount
 > 1
