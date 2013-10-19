@@ -1,5 +1,6 @@
 # SpyQuery
-![Build Status](http://travis-ci.org/kevinmarx/spyquery.png?branch=master)
+[![Build Status](https://travis-ci.org/kevinmarx/spyquery.png?branch=master)](https://travis-ci.org/kevinmarx/spyquery?branch=master)
+
 
 Emulates jQuery as sinon spies, so you can test code that uses jQuery on the server or in the browser.
 
