@@ -57,18 +57,15 @@
   ];
 
   var coreMethods = [
-    "Animation", "Callbacks", "Deferred", "Event", "Tween",
-    "_data", "_queueHooks", "abovethetop", "acceptData", "access", "ajax",
-    "ajaxPrefilter", "ajaxSetup", "ajaxTransport", "attr", "belowthefold",
-    "buildFragment", "camelCase", "clean", "cleanData", "clone", "contains",
-    "css", "data", "dequeue", "dir", "error", "extend", "filter",
-    "find", "fx", "get", "getJSON", "getScript", "globalEval", "grep",
-    "hasData", "holdReady", "inArray", "inviewport", "isArray", "isEmptyObject",
-    "isFunction", "isNumeric", "isPlainObject", "isWindow", "isXMLDoc", "leftofbegin",
-    "merge", "noConflict", "nodeName", "noop", "now", "param",
-    "parseHTML", "parseJSON", "parseXML", "post", "prop", "proxy", "queue", "ready",
-    "removeAttr", "removeData", "removeEvent", "rightoffold", "sibling", "speed",
-    "style", "sub", "swap", "text", "trim", "type", "uaMatch", "unique", "when"
+    'Animation', 'Callbacks', 'Deferred', 'Event', 'Tween', '_data', '_queueHooks', 'abovethetop',
+    'acceptData', 'access', 'ajax', 'ajaxPrefilter', 'ajaxSetup', 'ajaxTransport',
+    'attr', 'belowthefold', 'buildFragment', 'camelCase', 'clean', 'cleanData',
+    'contains', 'dir', 'fx', 'getJSON', 'getScript', 'globalEval', 'grep', 'hasData',
+    'holdReady', 'inArray', 'inviewport', 'isArray', 'isEmptyObject', 'isFunction', 'isNumeric',
+    'isPlainObject', 'isWindow', 'isXMLDoc', 'leftofbegin', 'merge', 'noConflict',
+    'nodeName', 'noop', 'now', 'param', 'parseHTML', 'parseJSON', 'parseXML',
+    'post', 'proxy', 'removeEvent', 'rightoffold', 'sibling', 'speed', 'style',
+    'sub', 'swap', 'trim', 'type', 'uaMatch', 'unique', 'when', 'then'
   ];
 
   var allMethods = _.union(valueMethods, stringMethods, arrayMethods, chainMethods)
@@ -97,7 +94,7 @@
     };
 
     _.each(allMethods, function(item) {
-      $.fn[item] = function() {}
+      $.fn[item] = function() {};
 
       switch (true) {
         case !!~valueMethods.indexOf(item):
@@ -109,10 +106,15 @@
         case !!~arrayMethods.indexOf(item):
           sinon.stub($.fn, item, function() { return [] });
           break;
-        case !!~chainMethods.indexOf(item):
+        case !!~chainMethods.indexOf(item) || !!~coreMethods.indexOf(item):
           sinon.stub($.fn, item, function() { return $(this) });
           break;
       }
+    })
+
+    _.each(coreMethods, function(item) {
+      $[item] = function() {};
+      sinon.stub($, item, function() { return $(this) });
     })
 
     $.fn.init = init
